@@ -1,6 +1,6 @@
 FROM docker:17.06
 
-MAINTAINER Viktor Farcic <viktor@farcic.com>
+MAINTAINER Ashley Aitken <ashley.aitken@hedventures.com>
 
 ARG "version=0.2.0"
 ARG "build_date=unknown"
@@ -28,6 +28,8 @@ ENV SWARM_CLIENT_VERSION="3.3" \
 
 RUN adduser -G root -D jenkins && \
     apk --update --no-cache add bash openjdk8-jre python py-pip git openssh ca-certificates openssl && \
+    paxctl -c /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
+    paxctl -m /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
     wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
    pip install docker-compose
 
