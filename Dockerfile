@@ -27,7 +27,7 @@ ENV SWARM_CLIENT_VERSION="3.3" \
     PASSWORD_SECRET=""
 
 RUN adduser -G root -D jenkins && \
-    apk --update --no-cache add bash openjdk8-jre python py-pip git openssh ca-certificates openssl && \
+    apk --update --no-cache add bash paxctl openjdk8-jre python py-pip git openssh ca-certificates openssl && \
     paxctl -c /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
     paxctl -m /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
     wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
