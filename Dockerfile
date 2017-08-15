@@ -30,6 +30,8 @@ RUN adduser -G root -D jenkins && \
     apk --update --no-cache add bash paxctl openjdk8-jre python py-pip git openssh ca-certificates openssl && \
     paxctl -c /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
     paxctl -m /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
+    setfattr -n user.pax.flags -v "mr" /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
+    setfattr -n user.pax.flags -v "mr" /usr/bin/java && \
     wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
    pip install docker-compose
 
