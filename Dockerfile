@@ -38,6 +38,12 @@ RUN adduser -G root -D jenkins && \
     wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
    pip install docker-compose
 
+RUN apk add --no-cache --virtual=build-dependencies curl && \
+    curl -sL "http://dl.bintray.com/sbt/native-packages/sbt/$SBT_VERSION/sbt-$SBT_VERSION.tgz" | gunzip | tar -x -C /usr/local && \
+    ln -s /usr/local/sbt/bin/sbt /usr/local/bin/sbt && \
+    chmod 0755 /usr/local/bin/sbt && \
+    apk del build-dependencies
+
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
