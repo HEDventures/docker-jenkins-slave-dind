@@ -22,7 +22,7 @@ LABEL org.label-schema.vendor="vfarcic" \
 
 ENV SWARM_CLIENT_VERSION="3.3" \
     DOCKER_COMPOSE_VERSION="1.15.0" \
-    SBT_VERSION="0.13.13" \
+    SBT_VERSION="1.0.0" \
     COMMAND_OPTIONS="" \
     USER_NAME_SECRET="" \
     PASSWORD_SECRET=""
