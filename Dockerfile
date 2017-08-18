@@ -32,8 +32,9 @@ RUN adduser -G root -D jenkins && \
 #    paxctl -c /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
 #    paxctl -m /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
 #    setfattr -n user.pax.flags -v "mr" /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
+#    sysctl -w kernel.pax.softmode=1 && \
+#    setfattr -n user.pax.flags -v "mr" /usr/bin/java && \
     setfattr -n user.pax.flags -v "pemrs" /usr/bin/java && \
-    sysctl -w kernel.pax.softmode=1 && \
     wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
    pip install docker-compose
 
