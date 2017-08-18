@@ -27,7 +27,7 @@ ENV SWARM_CLIENT_VERSION="3.3" \
     PASSWORD_SECRET=""
 
 RUN adduser -G root -D jenkins && \
-    apk --update --no-cache add bash attr openjdk8-jre python py-pip git openssh ca-certificates openssl && \
+    apk --update --no-cache add bash attr openjdk8-jre python py-pip git openssh ca-certificates openssl curl zip tar && \
 #    apk --update --no-cache add bash paxctl setfattr openjdk8-jre python py-pip git openssh ca-certificates openssl && \
 #    paxctl -c /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
 #    paxctl -m /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
