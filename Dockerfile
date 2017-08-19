@@ -1,4 +1,5 @@
-FROM docker:17.06
+#FROM docker:17.06
+FROM innoq/docker-alpine-java8
 
 MAINTAINER Ashley Aitken <ashley.aitken@hedventures.com>
 
@@ -36,7 +37,7 @@ RUN adduser -G root -D jenkins && \
 #    setfattr -n user.pax.flags -v "mr" /usr/lib/jvm/java-8-openjdk/jre/bin/java && \
 #    sysctl -w kernel.pax.softmode=1 && \
 #    setfattr -n user.pax.flags -v "mr" /usr/bin/java && \
-    setfattr -n user.pax.flags -v "pemrs" /usr/bin/java && \
+#    setfattr -n user.pax.flags -v "pemrs" /usr/bin/java && \
     wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
    pip install docker-compose
 
@@ -46,40 +47,40 @@ RUN apk --update add curl ca-certificates tar && \
     apk add --allow-untrusted /tmp/glibc-2.21-r2.apk
 
 # Java Version
-ENV JAVA_VERSION_MAJOR 8
-ENV JAVA_VERSION_MINOR 45
-ENV JAVA_VERSION_BUILD 14
-ENV JAVA_PACKAGE       jdk
+#ENV JAVA_VERSION_MAJOR 8
+#ENV JAVA_VERSION_MINOR 45
+#ENV JAVA_VERSION_BUILD 14
+#ENV JAVA_PACKAGE       jdk
 
 # Download and unarchive Java
-RUN mkdir /opt && curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie"\
-  http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz \
-    | tar -xzf - -C /opt &&\
-    ln -s /opt/jdk1.${JAVA_VERSION_MAJOR}.0_${JAVA_VERSION_MINOR} /opt/jdk &&\
-    rm -rf /opt/jdk/*src.zip \
-           /opt/jdk/lib/missioncontrol \
-           /opt/jdk/lib/visualvm \
-           /opt/jdk/lib/*javafx* \
-           /opt/jdk/jre/lib/plugin.jar \
-           /opt/jdk/jre/lib/ext/jfxrt.jar \
-           /opt/jdk/jre/bin/javaws \
-           /opt/jdk/jre/lib/javaws.jar \
-           /opt/jdk/jre/lib/desktop \
-           /opt/jdk/jre/plugin \
-           /opt/jdk/jre/lib/deploy* \
-           /opt/jdk/jre/lib/*javafx* \
-           /opt/jdk/jre/lib/*jfx* \
-           /opt/jdk/jre/lib/amd64/libdecora_sse.so \
-           /opt/jdk/jre/lib/amd64/libprism_*.so \
-           /opt/jdk/jre/lib/amd64/libfxplugins.so \
-           /opt/jdk/jre/lib/amd64/libglass.so \
-           /opt/jdk/jre/lib/amd64/libgstreamer-lite.so \
-           /opt/jdk/jre/lib/amd64/libjavafx*.so \
-           /opt/jdk/jre/lib/amd64/libjfx*.so
+#RUN mkdir /opt && curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie"\
+#  http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz \
+#    | tar -xzf - -C /opt &&\
+#    ln -s /opt/jdk1.${JAVA_VERSION_MAJOR}.0_${JAVA_VERSION_MINOR} /opt/jdk &&\
+#    rm -rf /opt/jdk/*src.zip \
+#          /opt/jdk/lib/missioncontrol \
+#           /opt/jdk/lib/visualvm \
+#           /opt/jdk/lib/*javafx* \
+#           /opt/jdk/jre/lib/plugin.jar \
+#           /opt/jdk/jre/lib/ext/jfxrt.jar \
+#           /opt/jdk/jre/bin/javaws \
+#           /opt/jdk/jre/lib/javaws.jar \
+#           /opt/jdk/jre/lib/desktop \
+#           /opt/jdk/jre/plugin \
+#           /opt/jdk/jre/lib/deploy* \
+#           /opt/jdk/jre/lib/*javafx* \
+#           /opt/jdk/jre/lib/*jfx* \
+#           /opt/jdk/jre/lib/amd64/libdecora_sse.so \
+#           /opt/jdk/jre/lib/amd64/libprism_*.so \
+#           /opt/jdk/jre/lib/amd64/libfxplugins.so \
+#           /opt/jdk/jre/lib/amd64/libglass.so \
+#           /opt/jdk/jre/lib/amd64/libgstreamer-lite.so \
+#           /opt/jdk/jre/lib/amd64/libjavafx*.so \
+#           /opt/jdk/jre/lib/amd64/libjfx*.so
 
 # Set environment
-ENV JAVA_HOME /opt/jdk
-ENV PATH ${PATH}:${JAVA_HOME}/bin
+#ENV JAVA_HOME /opt/jdk
+#ENV PATH ${PATH}:${JAVA_HOME}/bin
 
 # Install SBT
 RUN apk add --no-cache --virtual=build-dependencies curl && \
