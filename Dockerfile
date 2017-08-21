@@ -22,23 +22,21 @@ LABEL org.label-schema.vendor="vfarcic" \
 
 ENV SWARM_CLIENT_VERSION="3.3" \
     DOCKER_COMPOSE_VERSION="1.15.0" \
-    SBT_VERSION="0.13.13" \
+    SBT_VERSION="0.13.15" \
     COMMAND_OPTIONS="" \
     USER_NAME_SECRET="" \
     PASSWORD_SECRET=""
 
 RUN adduser -G root -D jenkins && \
-    apk --update --no-cache add bash openjdk8-jre python py-pip git openssh ca-certificates openssl zip tar && \
+    apk --update --no-cache add bash openjdk8-jre python py-pip git openssh ca-certificates openssl unzip zip tar && \
     wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
    pip install docker-compose
 
-RUN apk add --no-cache --virtual=build-dependencies curl
-RUN    curl -sL "http://dl.bintray.com/sbt/native-packages/sbt/$SBT_VERSION/sbt-$SBT_VERSION.tgz" | gunzip | tar -x -C /usr/local
-RUN    ln -s /usr/local/sbt/bin/sbt /usr/local/bin/sbt
-RUN ls -lL /usr/local/bin/sbt /usr/local/sbt/bin/sbt
-RUN whoami
-RUN    chmod 0755 /usr/local/bin/sbt
-RUN    apk del build-dependencies
+RUN apk add --no-cache --virtual=build-dependencies curl && \
+    curl -sL "http://dl.bintray.com/sbt/native-packages/sbt/$SBT_VERSION/sbt-$SBT_VERSION.tgz" | gunzip | tar -x -C /usr/local && \
+    ln -s /usr/local/sbt/bin/sbt /usr/local/bin/sbt && \
+    chmod 0755 /usr/local/bin/sbt && \
+    apk del build-dependencies
 
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
