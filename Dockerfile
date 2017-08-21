@@ -35,7 +35,7 @@ RUN adduser -G root -D jenkins && \
 RUN apk add --no-cache --virtual=build-dependencies curl
 RUN    curl -sL "http://dl.bintray.com/sbt/native-packages/sbt/$SBT_VERSION/sbt-$SBT_VERSION.tgz" | gunzip | tar -x -C /usr/local
 RUN    ln -s /usr/local/sbt/bin/sbt /usr/local/bin/sbt
-RUN ls -lL /usr/local/bin/sbt
+RUN ls -lL /usr/local/bin/sbt /usr/local/sbt/bin/sbt
 RUN whoami
 RUN    chmod 0755 /usr/local/bin/sbt
 RUN    apk del build-dependencies
