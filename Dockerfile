@@ -1,6 +1,6 @@
 FROM docker:17.06
 
-MAINTAINER Viktor Farcic <viktor@farcic.com>
+MAINTAINER Ashley Aitken <ashley.aitken@hedventures.com>
 
 ARG "version=0.2.0"
 ARG "build_date=unknown"
@@ -32,11 +32,11 @@ RUN adduser -G root -D jenkins && \
     wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
    pip install docker-compose
 
-#RUN apk add --no-cache --virtual=build-dependencies curl
-#RUN    curl -sL "http://dl.bintray.com/sbt/native-packages/sbt/$SBT_VERSION/sbt-$SBT_VERSION.tgz" | gunzip | tar -x -C /usr/local
-#RUN    ln -s /usr/local/sbt/bin/sbt /usr/local/bin/sbt
-#RUN    chmod 0755 /usr/local/bin/sbt
-#RUN    apk del build-dependencies
+RUN apk add --no-cache --virtual=build-dependencies curl && \
+    curl -sL "http://dl.bintray.com/sbt/native-packages/sbt/$SBT_VERSION/sbt-$SBT_VERSION.tgz" | gunzip | tar -x -C /usr/local && \
+    ln -s /usr/local/sbt/bin/sbt /usr/local/bin/sbt && \
+    chmod 0755 /usr/local/bin/sbt && \
+    apk del build-dependencies
 
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
