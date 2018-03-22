@@ -23,12 +23,12 @@ LABEL org.label-schema.vendor="vfarcic" \
 ENV SWARM_CLIENT_VERSION="3.3" \
     DOCKER_COMPOSE_VERSION="1.15.0" \
     SBT_VERSION="0.13.15" \
-    COMMAND_OPTIONS="" \
+    COMMAND_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" \
     USER_NAME_SECRET="" \
     PASSWORD_SECRET=""
 
 RUN adduser -G root -D jenkins && \
-    apk --update --no-cache add bash openjdk8-jre python py-pip git openssh ca-certificates openssl unzip zip tar && \
+    apk --update --no-cache add bash openjdk9-jre python py-pip git openssh ca-certificates openssl unzip zip tar && \
     wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
    pip install docker-compose
 
